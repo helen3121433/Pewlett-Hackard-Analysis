@@ -81,6 +81,10 @@ SELECT COUNT(emp_no) AS Count_of_employee
 FROM unique_titles;
 -- 72458
 
+SELECT COUNT(me.emp_no) FROM mentorship_eligibilty AS me;
+-- 1549
+
+
 --SELECT COUNT(rt.emp_no) AS Count_of_title_Job FROM retirement_titles as rt
 --UNION SELECT COUNT(ut.emp_no) AS Count_of_employee FROM unique_titles as ut; 
 
@@ -94,7 +98,7 @@ INNER JOIN departments AS d
 ON (de.dept_no = d.dept_no);
 
 SELECT * FROM mentorship_dept;
---select count(mentorship_dept.emp_no) FROM mentorship_dept;
+select count(mentorship_dept.emp_no) FROM mentorship_dept;
 
 -- count how many eligbility mentorship in each department
 SELECT count(md.dept_no), md.dept_name
@@ -107,4 +111,20 @@ SELECT * FROM count_mentorship;
 
 SELECT SUM(count_mentorship.count) FROM count_mentorship;
 -- 1708
+
+-- how many retirment ready employees in each department
+SELECT count(d.dept_no), d.dept_name
+INTO retire_dept
+FROM unique_titles AS ut
+INNER JOIN dept_emp AS de
+ON (ut.emp_no = de.emp_no)
+INNER JOIN departments AS d
+ON (de.dept_no = d.dept_no)
+GROUP BY d.dept_name
+ORDER BY count(d.dept_no);
+
+SELECT * FROM retire_dept;
+SELECT sum(retire_dept.count) FROM retire_dept;
+
+
 
